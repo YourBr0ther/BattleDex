@@ -1,0 +1,50 @@
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Build output
+dist/
+build/
+out/
+
+# Cache directories
+.cache/
+.npm/
+.yarn/
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*.swn
+*.bak
+*.sublime*
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Python (for local server)
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+
+# Project specific
+pokemon-dataset.json
+pokemon-model.json
+models/*.json
+*.log 
