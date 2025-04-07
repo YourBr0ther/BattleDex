@@ -18,14 +18,24 @@
   - [x] Connect to PokeAPI
   - [x] Create search logic
   - [x] Display results
-- [ ] Add voice search capability
-  - [ ] Implement Web Speech API
-  - [ ] Add voice input button
-  - [ ] Convert speech to search query
+- [x] Add voice search capability
+  - [x] Implement Web Speech API
+  - [x] Add voice input button
+  - [x] Convert speech to search query
 - [ ] Implement camera functionality
-  - [ ] Add camera access
-  - [ ] Create image capture interface
-  - [ ] Set up image processing
+  - [x] Add camera access
+  - [x] Create image capture interface
+  - [x] Set up basic UI components
+  - [x] Implement Pokemon recognition
+    - [x] Set up TensorFlow.js
+    - [x] Integrate MobileNet model
+    - [x] Create transfer learning pipeline
+    - [x] Create dataset gathering tool
+    - [ ] Train and test the model
+  - [ ] Test camera recognition
+    - [ ] Test on various Pokemon images
+    - [ ] Optimize recognition accuracy
+    - [ ] Handle edge cases and errors
 
 ## Phase 3: Pokemon Data Integration
 - [x] Create Pokemon data service
@@ -43,17 +53,29 @@
   - [x] Test offline functionality
 - [x] Add app icons
 - [ ] Implement push notifications (if needed)
+  - [ ] Add notification permission request
+  - [ ] Create notification service
+  - [ ] Test notification delivery
 
 ## Phase 5: Testing and Optimization
 - [x] Add error handling
 - [x] Implement loading states
 - [x] Optimize performance
 - [ ] Test on multiple devices
+  - [ ] Test camera functionality
+  - [ ] Test voice recognition
+  - [ ] Test PWA installation
 - [ ] Test offline functionality
-- [ ] Validate PWA requirements
+  - [ ] Verify cached resources
+  - [ ] Test offline search
+  - [ ] Test offline image recognition
+- [x] Validate PWA requirements
 
 ## Phase 6: Deployment
 - [x] Deploy to GitHub Pages
 - [ ] Test production build
+  - [ ] Verify all features work in production
+  - [ ] Check performance metrics
+  - [ ] Validate security settings
 - [ ] Document deployment process
 - [ ] Create final release 

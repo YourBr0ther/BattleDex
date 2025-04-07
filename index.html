@@ -16,55 +16,48 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="BattleDex">
+    <!-- TensorFlow.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.15.0"></script>
+    <!-- TensorFlow.js MobileNet -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.1"></script>
+    <!-- TensorFlow.js Transfer Learning -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/knn-classifier@1.2.6"></script>
 </head>
 <body>
     <header>
         <h1>BattleDex</h1>
         <nav>
-            <button id="textSearchBtn" class="active">Text</button>
-            <button id="voiceSearchBtn">Voice</button>
-            <button id="cameraSearchBtn">Camera</button>
+            <button id="textSearchBtn" class="active">Text Search</button>
+            <button id="voiceSearchBtn">Voice Search</button>
+            <button id="cameraSearchBtn">Camera Search</button>
         </nav>
     </header>
 
     <main>
-        <!-- Text Search Section -->
-        <section id="textSearch" class="search-section active">
+        <div id="textSearch" class="search-section active">
             <input type="text" id="pokemonSearch" placeholder="Enter Pokemon name...">
             <button id="searchBtn">Search</button>
-        </section>
+        </div>
 
-        <!-- Voice Search Section -->
-        <section id="voiceSearch" class="search-section">
-            <button id="startVoice">
-                <span class="icon">🎤</span>
-                <span class="text">Start Voice Search</span>
-            </button>
-            <p id="voiceResult" class="voice-result"></p>
-        </section>
+        <div id="voiceSearch" class="search-section">
+            <button id="startVoice">Start Voice Search</button>
+            <p id="voiceResult"></p>
+        </div>
 
-        <!-- Camera Search Section -->
-        <section id="cameraSearch" class="search-section">
-            <video id="camera" autoplay playsinline></video>
-            <button id="captureBtn">Capture</button>
-            <canvas id="captureCanvas" style="display: none;"></canvas>
-        </section>
-
-        <!-- Results Section -->
-        <section id="results" class="hidden">
-            <div class="pokemon-info">
-                <img id="pokemonSprite" alt="Pokemon sprite">
-                <h2 id="pokemonName"></h2>
-                <div id="pokemonTypes"></div>
-                <div class="pokedex-entry">
-                    <h3>Pokedex Entry</h3>
-                    <p id="pokedexText"></p>
-                </div>
-                <div class="type-weaknesses">
-                    <h3>Type Weaknesses</h3>
-                    <div id="weaknessList"></div>
-                </div>
+        <div id="cameraSearch" class="search-section">
+            <div class="camera-container">
+                <video id="camera" autoplay playsinline></video>
+                <canvas id="captureCanvas" style="display: none;"></canvas>
+                <button id="captureBtn">Capture</button>
             </div>
+        </div>
+
+        <section id="results">
+            <img id="pokemonSprite" alt="Pokemon sprite">
+            <h2 id="pokemonName"></h2>
+            <div id="pokemonTypes"></div>
+            <p id="pokedexText"></p>
+            <div id="weaknessList"></div>
         </section>
     </main>
 

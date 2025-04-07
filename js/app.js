@@ -1,5 +1,7 @@
 import { getPokemonData } from './api.js';
 import { VoiceSearch } from './voice.js';
+import { CameraHandler } from './camera.js';
+import { PokemonRecognizer } from './vision.js';
 
 // DOM Elements
 const textSearchBtn = document.getElementById('textSearchBtn');
@@ -15,6 +17,23 @@ const pokemonTypes = document.getElementById('pokemonTypes');
 const pokedexText = document.getElementById('pokedexText');
 const weaknessList = document.getElementById('weaknessList');
 
+// Camera elements
+const videoElement = document.getElementById('camera');
+const captureBtn = document.getElementById('captureBtn');
+const canvasElement = document.getElementById('captureCanvas');
+
+// Initialize camera and vision
+let cameraHandler;
+let pokemonRecognizer;
+try {
+    cameraHandler = new CameraHandler(videoElement, canvasElement);
+    pokemonRecognizer = new PokemonRecognizer();
+    setupCamera();
+} catch (error) {
+    console.warn('Camera functionality not available:', error);
+    cameraSearchBtn.style.display = 'none';
+}
+
 // Voice search elements
 const startVoiceBtn = document.getElementById('startVoice');
 const voiceResult = document.getElementById('voiceResult');
@@ -25,10 +44,9 @@ try {
     voiceSearch = new VoiceSearch();
     setupVoiceSearch();
 } catch (error) {
-    // Handle browsers that don't support voice recognition
+    console.warn('Voice search not supported:', error);
     voiceSearchBtn.style.display = 'none';
     startVoiceBtn.style.display = 'none';
-    console.warn('Voice search not supported:', error);
 }
 
 // Event Listeners
@@ -70,6 +88,52 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+
+/**
+ * Sets up camera functionality
+ */
+function setupCamera() {
+    cameraHandler.setOnError((error) => {
+        console.error('Camera error:', error);
+        alert('Failed to access camera. Please make sure you have granted camera permissions.');
+    });
+
+    captureBtn.addEventListener('click', async () => {
+        try {
+            captureBtn.disabled = true;
+            captureBtn.textContent = 'Processing...';
+
+            // Capture frame
+            const imageData = cameraHandler.captureFrame();
+
+            // Initialize recognizer if needed
+            if (!pokemonRecognizer.model) {
+                await pokemonRecognizer.initialize();
+            }
+
+            // Get predictions
+            const predictions = await pokemonRecognizer.recognizePokemon(imageData);
+
+            if (predictions.length > 0) {
+                // Use the top prediction
+                const topPrediction = predictions[0];
+                console.log('Predictions:', predictions);
+                
+                // Search for the predicted Pokemon
+                await handlePokemonSearch(topPrediction.pokemon);
+            } else {
+                alert('No Pokemon recognized in the image. Please try again.');
+            }
+
+        } catch (error) {
+            console.error('Recognition error:', error);
+            alert('Failed to process image. Please try again.');
+        } finally {
+            captureBtn.disabled = false;
+            captureBtn.textContent = 'Capture';
+        }
+    });
+}
 
 /**
  * Sets up voice search functionality
@@ -165,6 +229,13 @@ function switchSearchMethod(methodId) {
         section.classList.remove('active');
     });
     document.getElementById(methodId).classList.add('active');
+
+    // Handle camera activation/deactivation
+    if (methodId === 'cameraSearch' && cameraHandler) {
+        cameraHandler.start();
+    } else if (cameraHandler) {
+        cameraHandler.stop();
+    }
 }
 
 /**
