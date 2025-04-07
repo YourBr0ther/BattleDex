@@ -90,11 +90,42 @@ main {
 }
 
 #startVoice {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 15px 30px;
-    font-size: 18px;
+    position: relative;
+    padding: 20px 40px;
+    background-color: var(--primary-color);
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+#startVoice .icon {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+#startVoice.listening {
+    background-color: #ff4444;
+    animation: pulse 1.5s infinite;
+}
+
+#startVoice.listening .text {
+    margin-left: 10px;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(238, 21, 21, 0.7);
+    }
+    
+    70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba(238, 21, 21, 0);
+    }
+    
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(238, 21, 21, 0);
+    }
 }
 
 #camera {
@@ -230,4 +261,11 @@ footer a:hover {
 .weakness-group .type-badge {
     font-size: 0.9em;
     padding: 3px 10px;
+}
+
+.voice-result {
+    margin-top: var(--spacing);
+    text-align: center;
+    color: #666;
+    min-height: 1.5em;
 } 

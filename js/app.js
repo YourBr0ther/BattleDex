@@ -1,4 +1,5 @@
 import { getPokemonData } from './api.js';
+import { VoiceSearch } from './voice.js';
 
 // DOM Elements
 const textSearchBtn = document.getElementById('textSearchBtn');
@@ -13,6 +14,22 @@ const pokemonName = document.getElementById('pokemonName');
 const pokemonTypes = document.getElementById('pokemonTypes');
 const pokedexText = document.getElementById('pokedexText');
 const weaknessList = document.getElementById('weaknessList');
+
+// Voice search elements
+const startVoiceBtn = document.getElementById('startVoice');
+const voiceResult = document.getElementById('voiceResult');
+
+// Initialize voice search
+let voiceSearch;
+try {
+    voiceSearch = new VoiceSearch();
+    setupVoiceSearch();
+} catch (error) {
+    // Handle browsers that don't support voice recognition
+    voiceSearchBtn.style.display = 'none';
+    startVoiceBtn.style.display = 'none';
+    console.warn('Voice search not supported:', error);
+}
 
 // Event Listeners
 textSearchBtn.addEventListener('click', () => switchSearchMethod('textSearch'));
@@ -53,6 +70,84 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+
+/**
+ * Sets up voice search functionality
+ */
+function setupVoiceSearch() {
+    let isListening = false;
+
+    startVoiceBtn.addEventListener('click', () => {
+        if (isListening) {
+            voiceSearch.stop();
+        } else {
+            voiceSearch.start();
+        }
+    });
+
+    voiceSearch.setOnStart(() => {
+        isListening = true;
+        startVoiceBtn.classList.add('listening');
+        startVoiceBtn.querySelector('.text').textContent = 'Listening...';
+        voiceResult.textContent = '';
+    });
+
+    voiceSearch.setOnResult((result) => {
+        voiceResult.textContent = `Searching for: ${result}`;
+        handleVoiceSearch(result);
+    });
+
+    voiceSearch.setOnError((error) => {
+        let errorMessage = 'Error occurred during voice recognition.';
+        switch (error) {
+            case 'no-speech':
+                errorMessage = 'No speech was detected. Please try again.';
+                break;
+            case 'audio-capture':
+                errorMessage = 'No microphone was found or microphone is disabled.';
+                break;
+            case 'not-allowed':
+                errorMessage = 'Microphone access was denied. Please allow microphone access to use voice search.';
+                break;
+            case 'network':
+                errorMessage = 'Network error occurred. Please check your connection.';
+                break;
+        }
+        voiceResult.textContent = errorMessage;
+        resetVoiceButton();
+    });
+
+    voiceSearch.setOnEnd(() => {
+        resetVoiceButton();
+    });
+}
+
+/**
+ * Resets the voice button to its initial state
+ */
+function resetVoiceButton() {
+    startVoiceBtn.classList.remove('listening');
+    startVoiceBtn.querySelector('.text').textContent = 'Start Voice Search';
+}
+
+/**
+ * Handles voice search results
+ * @param {string} searchTerm - The recognized voice input
+ */
+async function handleVoiceSearch(searchTerm) {
+    try {
+        // Show loading state
+        voiceResult.textContent = `Searching for: ${searchTerm}...`;
+        resultsSection.classList.add('hidden');
+
+        // Fetch Pokemon data
+        const pokemonData = await getPokemonData(searchTerm);
+        displayPokemonData(pokemonData);
+
+    } catch (error) {
+        voiceResult.textContent = error.message;
+    }
+}
 
 /**
  * Switches between search methods
