@@ -1,7 +1,7 @@
 /**
  * Voice recognition handler for Pokemon search
  */
-class VoiceSearch {
+export class VoiceSearch {
     constructor() {
         // Check if browser supports speech recognition
         window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
