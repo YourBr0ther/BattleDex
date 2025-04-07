@@ -52,10 +52,6 @@
   - [x] Add install prompt
   - [x] Test offline functionality
 - [x] Add app icons
-- [ ] Implement push notifications (if needed)
-  - [ ] Add notification permission request
-  - [ ] Create notification service
-  - [ ] Test notification delivery
 
 ## Phase 5: Testing and Optimization
 - [x] Add error handling
