@@ -3,14 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="#ee1515">
+    <meta name="description" content="A Pokemon identification app that helps you get information about Pokemon using camera, voice, or text search.">
     <title>BattleDex - Pokemon Battle Companion</title>
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
     <!-- iOS support -->
-    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
-    <meta name="apple-mobile-web-app-status-bar" content="#ffffff">
+    <link rel="apple-touch-icon" href="icons/icon-512x512.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="BattleDex">
 </head>
 <body>
     <header>
@@ -64,7 +67,7 @@
     </main>
 
     <footer>
-        <p>Data provided by <a href="https://pokeapi.co/" target="_blank">PokeAPI</a></p>
+        <p>Data provided by <a href="https://pokeapi.co/" target="_blank" rel="noopener">PokeAPI</a></p>
     </footer>
 
     <script src="js/app.js" type="module"></script>
@@ -72,7 +75,7 @@
         // Service Worker Registration
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
+                navigator.serviceWorker.register('./sw.js')
                     .then(reg => console.log('Service Worker registered'))
                     .catch(err => console.log('Service Worker registration failed:', err));
             });

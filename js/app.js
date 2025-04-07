@@ -24,6 +24,36 @@ pokemonSearch.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') handleSearch();
 });
 
+// Handle PWA installation
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    // Prevent Chrome 67 and earlier from automatically showing the prompt
+    e.preventDefault();
+    // Stash the event so it can be triggered later
+    deferredPrompt = e;
+});
+
+// Check for search method in URL parameters (for PWA shortcuts)
+document.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const searchMethod = params.get('search');
+    
+    if (searchMethod) {
+        switch (searchMethod) {
+            case 'text':
+                switchSearchMethod('textSearch');
+                break;
+            case 'voice':
+                switchSearchMethod('voiceSearch');
+                break;
+            case 'camera':
+                switchSearchMethod('cameraSearch');
+                break;
+        }
+    }
+});
+
 /**
  * Switches between search methods
  * @param {string} methodId - ID of the search method to switch to
