@@ -215,4 +215,19 @@ footer a:hover {
     #pokemonSprite {
         max-width: 150px;
     }
+}
+
+.weakness-group {
+    margin-bottom: 15px;
+}
+
+.weakness-group h4 {
+    margin: 10px 0 5px;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.weakness-group .type-badge {
+    font-size: 0.9em;
+    padding: 3px 10px;
 } 
